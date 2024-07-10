@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<!--    <title th:text="#{home.index.headline}" />-->
+    <title>HomePage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div layout:fragment="content">
+<!--    <h1 th:text="#{home.index.headline}" class="grow text-3xl md:text-4xl font-medium mb-8" />-->
+<!--    <p th:utext="#{home.index.text}" class="mb-4" />-->
+<!--    <p th:utext="#{home.index.swagger}" class="mb-12" />-->
+    <div class="md:w-2/5 mb-12">
+<!--        <h4 th:text="#{home.index.exploreEntities}" class="text-2xl font-medium mb-4" />-->
+        <div class="flex flex-col border border-gray-300 rounded bg-gray-100">
+            <a th:href="@{/employee}" th:text="#{employee.list.headline}" class="w-full border-gray-300 hover:bg-gray-300 rounded-t rounded-b px-4 py-2" />
+        </div>
+    </div>
+</div>
+</body>
+</html>

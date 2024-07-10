@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title th:text="#{employee.list.headline}" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script> <!-- Include jQuery -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script> <!-- Then DataTables -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            $('#myTable').DataTable({
+                searching: true,  // Enable searching
+                sorting: true,    // Enable sorting
+                paging: true      // Enable pagination
+            });
+        });
+    </script>
+
+    <style>
+        .content {
+        display: none;
+    }
+
+    </style>
+    <script>
+        function toggleContent(button) {
+        var content = button.nextElementSibling; // Get the content element
+        if (content.style.display === "none" || content.style.display === "") {
+            content.style.display = "block"; // Show the content
+            button.innerHTML = "&#x2212;"; // Set the button content to -
+        } else {
+            content.style.display = "none"; // Hide the content
+            button.innerHTML = "&#x2B;"; // Set the button content to +
+        }
+    }
+    </script>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="flex flex-wrap mb-6">
+        <h1 th:text="#{employee.list.headline}" class="grow text-3xl md:text-4xl font-medium mb-2" />
+        <div>
+            <a href="employee/add" th:text="#{employee.list.createNew}" class="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2" />
+        </div>
+    </div>
+    <div th:if="${employeelist.empty}" th:text="#{employeelist.list.empty}" />
+    <div th:if="${!employeelist.empty}" class="overflow-x-auto">
+
+        <table class="min-w-full divide-y divide-gray-600 border border-gray-600 display" id="myTable"  >
+            <thead>
+            <tr>
+                <th th:text="#{employeeList.id.label}" scope="col" class="text-left p-2 border-r border-gray-600 text-white bg-gray-400" />
+                <th th:text="#{employeeList.name.label}" scope="col" class="text-left p-2 border-r border-gray-600 text-white bg-gray-400" />
+                <th th:text="#{employeeList.department.label}" scope="col" class="text-left p-2 border-r border-gray-600 text-white bg-gray-400" />
+                <th th:text="#{employeeList.salary.label}" scope="col" class="text-left p-2 border-r border-gray-600 text-white bg-gray-400" />
+                <th th:text="#{employeeList.employementType.label}" scope="col" class="text-left p-2 border-r border-gray-600 text-white bg-gray-400" />
+                <th scope="col" class="text-left p-2 border-r border-gray-600 text-white bg-gray-400"><!-- --></th>
+            </tr>
+            </thead>
+            <tbody class="border-t-2 border-black">
+            <tr th:each="employee : ${employeelist}" class="odd:bg-gray-200">
+                <td th:text="${employee.id}" class="p-2 border-r border-gray-500" />
+                <td th:text="${employee.name}" class="p-2 border-r border-gray-500" />
+<!--                <td class="p-2 border-r border-gray-500">-->
+<!--                    <button class="expand-button text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm" onclick="toggleContent(this)">&#x2B;</button>-->
+<!--                    <pre th:text="${rule.ruleText}" class="content" ></pre>-->
+<!--                </td>-->
+
+                <td th:text="${employee.department}" class="p-2 border-r border-gray-500" />
+                <td th:text="${employee.salary}" class="p-2 border-r border-gray-500" />
+                <td th:text="${employee.employementType}" class="p-2 border-r border-gray-500" />
+                <td class="p-2">
+                    <div class="float-right whitespace-nowrap">
+                        <a
+                                th:href="@{~/employee/edit/{id}(id=${employee.id})}" th:text="#{employee.list.edit}" class="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm" />
+                        <form th:action="@{~/employee/delete/{id}(id=${employee.id})}"
+                              th:hx-confirm="#{delete.confirm}" method="post" class="inline">
+                            <button th:text="#{employee.list.delete}" type="submit" class="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

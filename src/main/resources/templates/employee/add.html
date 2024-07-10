@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{rule.add.headline}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="flex flex-wrap mb-6">
+        <h1 th:text="#{employee.add.headline}" class="grow text-3xl md:text-4xl font-medium mb-2" />
+        <div>
+            <a th:href="@{/employee}" th:text="#{rule.add.back}" class="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-4 rounded px-5 py-2" />
+        </div>
+    </div>
+
+    <form action="employee/add" th:object="${employeelist}" method="post">
+
+        <input type="text" th:field="*{id}" placeholder="enter ruleKey" class="mb-4 col-span-10 w-full xl:w-3/4 border border-gray-300 rounded null"/>
+        <textarea type="text" th:field="*{name}" placeholder="enter ruleText" class="mb-4 col-span-10 w-full xl:w-3/4 border border-gray-300 rounded null" />
+        <textarea type="text" th:field="*{department}" placeholder="enter ruleText in Json format (ruleUpsertDto)" class="mb-4 col-span-10 w-full xl:w-3/4 border border-gray-300 rounded null" />
+        <input type="text" th:field="*{salary}" placeholder="enter ruleSet" class="mb-4 col-span-10 w-full xl:w-3/4 border border-gray-300 rounded null" />
+        <br>
+        <hr/>
+        <input type="submit" th:value="#{employee.add.headline}" class="mb-4 inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
+    </form>
+</div>
+
+</body>
+</html>
